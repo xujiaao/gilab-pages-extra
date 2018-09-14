@@ -6,7 +6,7 @@ An extra GitLab Pages WebServer which supports access control.
 ## Installation
 
 ````bash
-git clone https://github.com/xujiaao/gitlab-pages-extra.git # Clone project.
+git clone https://github.com/xujiaao/gitlab-pages-extra.git # Clone this project.
 
 cd gitlab-pages-extra
 npm install # Install dependencies.
