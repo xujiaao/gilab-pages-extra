@@ -1,0 +1,84 @@
+extends ../../layout
+
+block activate
+    - activate('settings/gitlab')
+
+block content
+    - inputs = inputs || {}
+
+    div.content-wrapper
+        section.content-header
+            h1 GitLab
+            ol.breadcrumb.hidden-xs.hidden-sm
+                li
+                    a(href=urls.generate('/dashboard'))
+                        i.fa.fa-dashboard
+                        span Dashboard
+                li.active
+                    a(href='#')
+                        i.fa.fa-code
+                        span GitLab
+
+        section.content
+            if successMessage && successMessage.length !== 0
+                div.alert.alert-success.alert-dismissible(role='alert')
+                    button.close(type='button' data-dismiss='alert' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    span= successMessage
+            if errorMessage
+                div.alert.alert-warning.alert-dismissible(role='alert')
+                    button.close(type='button' data-dismiss='alert' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    span= errorMessage
+
+            div.box.box-primary
+                div.box-body
+                    form.form-horizontal(method='post')
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='settings-gitlab-url') Server Address
+                            div.col-md-6.col-sm-10
+                                input#settings-gitlab-url.form-control.input-sm(
+                                name='gitlab-url' type='url' value=gitlab.url)
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='settings-gitlab-application-id') Application Id
+                            div.col-md-6.col-sm-10
+                                input#settings-gitlab-application-id.form-control.input-sm(
+                                name='gitlab-application-id' type='text' value=gitlab.application.id)
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='settings-gitlab-application-secret') Secret
+                            div.col-md-6.col-sm-10
+                                input#settings-gitlab-application-secret.form-control.input-sm(
+                                name='gitlab-application-secret' type='text' value=gitlab.application.secret)
+                        div.form-group.form-group-sm
+                            div.col-md-6.col-sm-10.col-sm-offset-2
+                                div#import-template-download.help-block.small
+                                    a(href='https://docs.gitlab.com/ee/integration/oauth_provider.html' target='_blank')
+                                        i.fa.fa-exclamation-circle.margin-r-5
+                                        | Checkout this guide for more information
+
+                        hr
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='settings-gitlab-callback') Callback URL
+                            div.col-md-6.col-sm-10
+                                div.input-group.input-group-sm
+                                    input#settings-gitlab-callback.form-control.input-sm(
+                                    type='text' readonly=true value=urls.callback)
+                                    span.input-group-btn
+                                        button.btn.btn-default.btn-sm.clipboard(
+                                        type='button'
+                                        data-clipboard-target='#settings-gitlab-callback')
+                                            i.fa.fa-clipboard
+                        hr
+                        div.row
+                            div.col-sm-10.col-sm-offset-2
+                                button.btn.btn-primary.btn-sm.margin-r-5(type='submit')
+                                    i.fa.fa-floppy-o
+                                    | &nbsp;&nbsp;Save
+                                a.btn.btn-default.btn-sm(href=urls.testing target='_blank')
+                                    i.fa.fa-check-square-o
+                                    | &nbsp;&nbsp;Test
+
+block scripts
+    script(src='https://cdn.bootcss.com/clipboard.js/2.0.1/clipboard.min.js')
+    script(type='text/javascript').
+        new ClipboardJS('.clipboard');

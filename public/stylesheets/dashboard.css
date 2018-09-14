@@ -1,0 +1,29 @@
+.skin-black .wrapper > .main-header, .skin-black-light .wrapper > .main-header {
+    border-top: 6px solid #3C8DBC;
+}
+
+.main-sidebar > .sidebar {
+    padding-top: 15px !important;
+}
+
+.content-wrapper {
+    background-color: #F9F9F9;
+    color: #454545;
+}
+
+@media (min-width: 768px) {
+    .content-wrapper {
+        padding: 0 40px 50px 50px;
+    }
+}
+
+.content-header h1 {
+    padding: 20px 20px 20px 0;
+    font-size: 35px;
+    font-weight: 100;
+    border-bottom: 1px solid #d2d6de;
+}
+
+pre {
+    border: none;
+}

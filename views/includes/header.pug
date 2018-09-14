@@ -1,0 +1,17 @@
+header.main-header
+    a.logo(href='#')
+        span.logo-mini
+            i.fa.fa-git
+        span.logo-lg.small
+            span.margin-r-5 GitLab
+            strong Pages
+    nav.navbar.navbar-static-top
+        a.sidebar-toggle(href='#' data-toggle='push-menu' role='button')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        div.navbar-custom-menu
+            ul.nav.navbar-nav
+                li
+                    a(href=urls.generate('/passport/logout'))
+                        i.fa.fa-sign-out

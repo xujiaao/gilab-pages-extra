@@ -1,0 +1,18 @@
+extends ../layout
+
+block stylesheets
+    link(rel='stylesheet' href=urls.generate('/assets/stylesheets/error.css'))
+
+block body
+    body
+        div.wrapper
+            section.content
+                div.error-page
+                    div.error-content
+                        h3
+                            span.margin-r-5 #{page.title}
+                            span.text-muted.hidden-xs (Error #{page.status})
+                        p= page.message
+                        a.btn.btn-primary.btn-sm(href=urls.homepage) Back to Homepage
+
+        include ../includes/scripts

@@ -1,0 +1,64 @@
+extends ../../layout
+
+block activate
+    - activate('pages/explore')
+
+block content
+    - gitlab = gitlab || {}
+
+    div.content-wrapper
+        section.content-header
+            h1 Explore Pages
+            ol.breadcrumb.hidden-xs.hidden-sm
+                li
+                    a(href=urls.generate('/dashboard'))
+                        i.fa.fa-dashboard
+                        span Dashboard
+                li.active
+                    a(href='#')
+                        i.fa.fa-search
+                        span Explore Pages
+
+        section.content
+            if pages && pages.length
+                div.box.box-primary
+                    div.box-body.table-responsive.no-padding
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th #
+                                    th Project
+                                    th Action
+                            tbody
+                                each page, index in pages
+                                    tr
+                                        td= index + 1
+                                        td= page.project
+                                        td.text-nowrap
+                                            a.btn.btn-primary.btn-xs.margin-r-5(
+                                            href=urls.generate('/pages/' + page.project + '/~')
+                                            target='_blank')
+                                                i.fa.fa-eye
+                                            button.pages-explore-remove.btn.btn-danger.btn-xs.margin-r-5(
+                                            data-id=encodeURIComponent(page.id)
+                                            data-project=page.project)
+                                                i.fa.fa-trash-o
+            else
+                div.box
+                    div.box-body.text-center No pages found
+
+block scripts
+    script(src='https://cdn.bootcss.com/clipboard.js/2.0.1/clipboard.min.js')
+    script(src='https://cdn.bootcss.com/bootbox.js/4.4.0/bootbox.min.js')
+    script(type='text/javascript').
+        new ClipboardJS('.clipboard');
+
+        $('.pages-explore-remove').click(function () {
+            var $remove = $(this);
+            bootbox.confirm('Are you sure to remove page <code>' + $remove.data('project') + '</code>?',
+                function (result) {
+                    if (result) {
+                        window.location.href = "#{urls.generate('/dashboard/pages/remove')}/" + $remove.data('id');
+                    }
+                });
+        });

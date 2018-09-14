@@ -1,0 +1,99 @@
+extends ../../layout
+
+block activate
+    - activate('pages/upload')
+
+block content
+    - inputs = inputs || {}
+
+    div.content-wrapper
+        section.content-header
+            h1 Upload Pages
+            ol.breadcrumb.hidden-xs.hidden-sm
+                li
+                    a(href=urls.generate('/dashboard'))
+                        i.fa.fa-dashboard
+                        span Dashboard
+                li.active
+                    a(href='#')
+                        i.fa.fa-cloud-upload
+                        span Upload Pages
+
+        section.content
+            if successMessage && successMessage.length !== 0
+                div.alert.alert-success.alert-dismissible(role='alert')
+                    button.close(type='button' data-dismiss='alert' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    span= successMessage
+            if errorMessage
+                div.alert.alert-warning.alert-dismissible(role='alert')
+                    button.close(type='button' data-dismiss='alert' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    span= errorMessage
+
+            div.box.box-primary
+                div.box-body
+                    form.form-horizontal(method='post' enctype='multipart/form-data')
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='pages-upload-project') GitLab Project
+                            div.col-md-6.col-sm-10
+                                input#pages-upload-project.form-control.input-sm(
+                                name='project' type='text' placeholder='owner/project' value=inputs.project)
+                        div.form-group.form-group-sm
+                            label.col-sm-2.control-label(for='pages-upload-pages') Pages
+                            div.col-md-6.col-sm-10
+                                input#pages-upload-pages.form-control.input-sm(
+                                name='pages' type='file')
+                        hr
+                        div.row
+                            div.col-sm-10.col-sm-offset-2
+                                button.btn.btn-primary.btn-sm.margin-r-5(type='submit')
+                                    i.fa.fa-cloud-upload
+                                    | &nbsp;&nbsp;Upload
+            hr
+            div.box.box-warning
+                div.box-header
+                    i.fa.fa-gg
+                    h3.box-title Command Line Uploading
+                div.box-body
+                    p
+                        | The&nbsp;
+                        code upload token
+                        | &nbsp;allows you to upload pages from Command Line.
+                    div.row
+                        div.col.col-md-8
+                            div.input-group.input-group-sm
+                                input#pages-upload-token.form-control.input-sm(
+                                readonly=true
+                                value=configuration.get('token'))
+                                span.input-group-btn
+                                    button.btn.btn-default.btn-sm.clipboard(data-clipboard-target='#pages-upload-token')
+                                        i.fa.fa-clipboard
+                                    button#pages-upload-token-reset.btn.btn-danger.btn-sm
+                                        i.fa.fa-recycle
+                    hr
+                    h4 Example
+                    div.row
+                        div.col.col-md-10
+                            p
+                                pre
+                                    code.small
+                                        | curl \
+                                        |   -F "token=#{configuration.get('token')}" \
+                                        |   -F "project=&lt;GitLab Project&gt;" \
+                                        |   -F "pages=@&lt;Pages&gt;" \
+                                        |   #{urls.upload}
+
+block scripts
+    script(src='https://cdn.bootcss.com/clipboard.js/2.0.1/clipboard.min.js')
+    script(src='https://cdn.bootcss.com/bootbox.js/4.4.0/bootbox.min.js')
+    script(type='text/javascript').
+        new ClipboardJS('.clipboard');
+
+        $('#pages-upload-token-reset').click(function () {
+            bootbox.confirm('Are you sure to reset the upload token?', function (result) {
+                if (result) {
+                    window.location.href = "#{urls.generate('/dashboard/pages/upload-token/reset')}";
+                }
+            });
+        });

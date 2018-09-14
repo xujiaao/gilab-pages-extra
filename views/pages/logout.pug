@@ -1,0 +1,27 @@
+extends ../layout
+
+block body
+    body.hold-transition.lockscreen
+        div.lockscreen-wrapper
+            div.lockscreen-logo
+                span.margin-r-5 GitLab
+                strong Pages
+            div.lockscreen-name Sign Out
+            div.lockscreen-item
+                div.lockscreen-image
+                    img(src=user.gitlab.avatar)
+                div.lockscreen-credentials
+                    div.input-group
+                        div.form-control= user.gitlab.name
+                        div.input-group-btn
+                            button#logout.btn.text-muted(title='Sign Out')
+                                i.fa.fa-sign-out
+            div.help-block.text-center Click to sign out your GitLab account
+            div.text-center
+                a(href=urls.generate('/dashboard')) Or sign in as an administrator
+
+        include ../includes/scripts
+        script(type='text/javascript').
+            $('#logout').click(function () {
+                window.location.href = "#{urls.generate('/passport/logout')}";
+            });

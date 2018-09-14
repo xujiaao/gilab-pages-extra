@@ -1,0 +1,17 @@
+body {
+    background: #D2D6DE;
+}
+
+.error-page {
+    margin-top: 200px;
+}
+
+.error-page > .error-content {
+    margin: 0;
+}
+
+@media (max-width: 991px) {
+    .error-page > .error-content > h3 {
+        text-align: left;
+    }
+}

@@ -1,0 +1,60 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='x-ua-compatible' content='ie=edge')
+        meta(name='renderer' content='webkit')
+        meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+
+        block title
+            title Pages
+
+        link(rel='stylesheet' href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css')
+        link(rel='stylesheet' href='https://cdn.bootcss.com/admin-lte/2.4.3/css/AdminLTE.min.css')
+        link(rel='stylesheet' href='https://cdn.bootcss.com/admin-lte/2.4.3/css/skins/skin-black-light.min.css')
+        link(rel='stylesheet' href='https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css')
+        link(rel='stylesheet' href='https://cdn.bootcss.com/ionicons/4.1.2/css/ionicons.min.css')
+
+        block stylesheets
+
+        link(rel='stylesheet' href=urls.generate('/assets/stylesheets/dashboard.css'))
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src='https://cdn.bootcss.com/html5shiv/r29/html5.min.js'></script>
+        <script src='https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js'></script>
+        <![endif]-->
+
+    block body
+        body.hold-transition.skin-black-light.sidebar-mini
+            script(type='text/javascript').
+                if (window.localStorage) {
+                    if (window.localStorage['admin.sidebar'] === 'collapsed') {
+                        document.body.className += ' sidebar-collapse';
+                    }
+                }
+
+            div.wrapper
+                include includes/header
+                include includes/sidebar
+
+                block content
+
+            include includes/scripts
+            script(type='text/javascript').
+                if (window.localStorage) {
+                    $(function () {
+                        var body = $('body');
+
+                        body.bind('expanded.pushMenu', function () {
+                            window.localStorage['admin.sidebar'] = 'expanded';
+                        });
+
+                        body.bind('collapsed.pushMenu', function () {
+                            window.localStorage['admin.sidebar'] = 'collapsed';
+                        });
+                    });
+                }
+
+            block scripts

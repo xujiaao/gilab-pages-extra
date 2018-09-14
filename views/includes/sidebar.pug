@@ -1,0 +1,31 @@
+mixin menu(path)
+    li(class=(attributes.class || '') + (activate.data && activate.data.startsWith(path + '/') && ' active' || ''))
+        if block
+            block
+
+- var activate = function(path) {activate.data = path + '/'};
+
+block activate
+
+aside.main-sidebar
+    section.sidebar
+        ul.sidebar-menu
+            li.header Pages
+            +menu('pages/explore')
+                a(href=urls.generate('/dashboard/pages/explore'))
+                    i.fa.fa-search
+                    span Explore
+            +menu('pages/upload')
+                a(href=urls.generate('/dashboard/pages/upload'))
+                    i.fa.fa-cloud-upload
+                    span Upload
+
+            li.header Settings
+            +menu('settings/gitlab')
+                a(href=urls.generate('/dashboard/settings/gitlab'))
+                    i.fa.fa-code
+                    span GitLab
+            +menu('settings/password')
+                a(href=urls.generate('/dashboard/settings/password'))
+                    i.fa.fa-key
+                    span Change Password

@@ -1,0 +1,24 @@
+extends ../layout
+
+block body
+    body.hold-transition.login-page
+        div.login-box
+            div.login-logo
+                span.margin-r-5 GitLab
+                strong Pages
+            div.login-box-body
+                div.login-box-msg Sign in to start your session
+                form(method='post')
+                    div.form-group.has-feedback
+                        input.form-control(name='username' type='text' placeholder='Username')
+                        span.form-control-feedback.fa.fa-user
+                    div.form-group.has-feedback
+                        input.form-control(name='password' type='password' placeholder='Password')
+                        span.form-control-feedback.fa.fa-lock
+                    if errorMessage
+                        span.text-danger= errorMessage
+                    div.row
+                        div.col-xs-4.col-xs-offset-8
+                            button.btn.btn-primary.btn-block.btn-flat(type='submit') Sign In
+
+        include ../includes/scripts
